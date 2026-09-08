@@ -1,0 +1,30 @@
+[general]
+name=Terrain2Flow - Open Channel Hydraulics
+qgisMinimumVersion=3.44
+qgisMaximumVersion=3.99
+description=DEM cross-sections, channel slope estimation, Manning flow calculations, rating curves, hydraulic QA, and engineering exports for QGIS.
+version=0.29
+author=M. Weier; QGIS 3 modernization and enhancements by Raza Ali
+email=razaali10@yahoo.com
+
+about=Terrain2Flow is an open-channel hydraulics plugin for QGIS. It supports interactive DEM cross-section extraction, direction-aware longitudinal slope estimation, steady uniform-flow calculations using Manning's equation, rating-curve generation, bank-station and maximum-stage controls, NoData and monotonicity QA checks, and timestamped CSV/PNG/JSON engineering outputs. Requires NumPy and Matplotlib. Results are engineering calculation aids and should be independently reviewed before design or regulatory use.
+
+changelog=
+    0.29 - Rebranded as Terrain2Flow; new plugin icon; added required GPL LICENSE; refreshed metadata and documentation for QGIS repository submission.
+    0.28 - Timestamped persistent run packages, direction-aware DEM slope sampling with reverse-direction option, saved slope plot/metadata, and automatic rating-curve monotonicity QA.
+    0.26 - Engineering QA controls: long constant-elevation-run warning, explicit NoData diagnostics, optional bank-station limits, optional maximum rating-curve WSE, and CSV rating-curve export.
+    0.25 - Rating curve spans the full valid DEM/user-defined bankfull WSE range and uses 51 evenly spaced ordinates.
+    0.24 - Modeless QGIS window and canvas-capture workflow.
+    0.23 - Removed stale map-tool QToolButton references.
+    0.22 - Fixed QGIS 3.44 map-tool shutdown error.
+    0.21 - Ported to QGIS 3 / Python 3 / Qt 5 and removed the Shapely runtime dependency.
+
+homepage=https://github.com/razaali10/Terrain2Flow
+tracker=https://github.com/razaali10/Terrain2Flow/issues
+repository=https://github.com/razaali10/Terrain2Flow
+
+tags=hydraulics,civil engineering,manning,open channel,DEM,cross section,slope,rating curve,drainage,river
+category=Raster
+icon=icon.png
+experimental=False
+deprecated=False
