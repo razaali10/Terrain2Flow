@@ -1,0 +1,30 @@
+name: Unpack Terrain2Flow source
+
+on:
+  push:
+    paths:
+      - source.b64
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct source archive
+        run: |
+          base64 -d source.b64 > /tmp/Terrain2Flow.zip
+          rm -rf /tmp/src
+          mkdir -p /tmp/src
+          unzip -q /tmp/Terrain2Flow.zip -d /tmp/src
+          cp -a /tmp/src/Terrain2Flow/. .
+          rm -f source.b64
+      - name: Commit source files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add Terrain2Flow v0.29 source" || exit 0
+          git push
