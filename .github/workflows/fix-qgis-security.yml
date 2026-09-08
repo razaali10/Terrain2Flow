@@ -28,3 +28,4 @@ jobs:
           git add flow_estimator_dialog.py metadata.txt
           git commit -m "Fix QGIS security scan findings for v0.30" || exit 0
           git push
+# Touch 2026-09-08 to rerun after matching fix script update.
