@@ -15,7 +15,7 @@ from qgis.PyQt.QtWidgets import (
     QDialog, QDialogButtonBox, QFileDialog, QMessageBox, QCheckBox,
     QDoubleSpinBox, QLabel, QHBoxLayout, QComboBox
 )
-from qgis.core import QgsPointXY, QgsWkbTypes, Qgis
+from qgis.core import QgsMessageLog, QgsPointXY, QgsWkbTypes, Qgis
 from qgis.gui import QgsRubberBand
 
 try:
@@ -244,15 +244,23 @@ class FlowEstimatorDialog(QDialog, FORM_CLASS):
         try:
             self.canvas.setFocus()
             self.canvas.activateWindow()
-        except Exception:
-            pass
+        except Exception as exc:
+            QgsMessageLog.logMessage(
+                f"Could not activate the map canvas window: {exc}",
+                "Terrain2Flow",
+                Qgis.Warning,
+            )
 
     def _stop_active_map_tool(self):
         if getattr(self, "tool", None) is not None and hasattr(self, "canvas"):
             try:
                 self.deactivate()
-            except Exception:
-                pass
+            except Exception as exc:
+                QgsMessageLog.logMessage(
+                    f"Could not deactivate the active map tool: {exc}",
+                    "Terrain2Flow",
+                    Qgis.Warning,
+                )
 
 
     @staticmethod
@@ -287,8 +295,12 @@ class FlowEstimatorDialog(QDialog, FORM_CLASS):
                 current = self.canvas.mapTool()
                 if current is getattr(self, "tool", None):
                     self.canvas.unsetMapTool(current)
-            except Exception:
-                pass
+            except Exception as cleanup_exc:
+                QgsMessageLog.logMessage(
+                    f"Could not unset the plugin map tool: {cleanup_exc}",
+                    "Terrain2Flow",
+                    Qgis.Warning,
+                )
 
     def rubberBand(self):
         self.canvas = self.iface.mapCanvas()
@@ -444,8 +456,12 @@ class FlowEstimatorDialog(QDialog, FORM_CLASS):
             return
         try:
             self.doIrregularProfileFlowEstimator()
-        except Exception:
-            pass
+        except Exception as exc:
+            QgsMessageLog.logMessage(
+                f"Could not refresh the irregular-profile calculation: {exc}",
+                "Terrain2Flow",
+                Qgis.Warning,
+            )
 
     def _analysis_sta_elev(self, calc_type=None):
         """Return the active cross section, optionally cropped to user bank stations."""
@@ -938,8 +954,12 @@ class FlowEstimatorDialog(QDialog, FORM_CLASS):
         self.axes.grid(True)
         try:
             self.axes.margins(x=0.05, y=0.05)
-        except Exception:
-            pass
+        except Exception as exc:
+            QgsMessageLog.logMessage(
+                f"Could not apply rating-curve plot margins: {exc}",
+                "Terrain2Flow",
+                Qgis.Warning,
+            )
         self.mplCanvas.draw_idle()
         self.mplCanvas.print_figure(os.path.join(outPath, "FlowEstimatorRatingCurve.png"))
 
@@ -947,7 +967,7 @@ class FlowEstimatorDialog(QDialog, FORM_CLASS):
 
         metadata = {
             "plugin": "Terrain2Flow",
-            "plugin_version": "0.28",
+            "plugin_version": "0.30",
             "run_timestamp": run_timestamp,
             "qgis_version": Qgis.QGIS_VERSION,
             "calculation_type": self.calcType,
