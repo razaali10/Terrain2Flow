@@ -290,7 +290,12 @@ class FlowEstimatorDialog(QDialog, FORM_CLASS):
         # independent of this plugin and is safe during plugin reload/unload.
         try:
             self.iface.actionPan().trigger()
-        except Exception:
+        except Exception as exc:
+            QgsMessageLog.logMessage(
+                f"Could not restore the Pan map tool: {exc}",
+                "Terrain2Flow",
+                Qgis.Warning,
+            )
             try:
                 current = self.canvas.mapTool()
                 if current is getattr(self, "tool", None):
