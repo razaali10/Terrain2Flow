@@ -12,8 +12,8 @@ replacements = {
     """        try:\n            self.canvas.setFocus()\n            self.canvas.activateWindow()\n        except Exception as exc:\n            QgsMessageLog.logMessage(\n                f\"Could not activate the map canvas window: {exc}\",\n                \"Terrain2Flow\",\n                Qgis.Warning,\n            )""",
     """            try:\n                self.deactivate()\n            except Exception:\n                pass""":
     """            try:\n                self.deactivate()\n            except Exception as exc:\n                QgsMessageLog.logMessage(\n                    f\"Could not deactivate the active map tool: {exc}\",\n                    \"Terrain2Flow\",\n                    Qgis.Warning,\n                )""",
-    """                except Exception:\n                    pass""":
-    """                except Exception as cleanup_exc:\n                    QgsMessageLog.logMessage(\n                        f\"Could not unset the plugin map tool: {cleanup_exc}\",\n                        \"Terrain2Flow\",\n                        Qgis.Warning,\n                    )""",
+    """            except Exception:\n                pass""":
+    """            except Exception as cleanup_exc:\n                QgsMessageLog.logMessage(\n                    f\"Could not unset the plugin map tool: {cleanup_exc}\",\n                    \"Terrain2Flow\",\n                    Qgis.Warning,\n                )""",
     """        try:\n            self.doIrregularProfileFlowEstimator()\n        except Exception:\n            pass""":
     """        try:\n            self.doIrregularProfileFlowEstimator()\n        except Exception as exc:\n            QgsMessageLog.logMessage(\n                f\"Could not refresh the irregular-profile calculation: {exc}\",\n                \"Terrain2Flow\",\n                Qgis.Warning,\n            )""",
     """        try:\n            self.axes.margins(x=0.05, y=0.05)\n        except Exception:\n            pass""":
