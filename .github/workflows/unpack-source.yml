@@ -3,7 +3,7 @@ name: Unpack Terrain2Flow source
 on:
   push:
     paths:
-      - source.b64
+      - source.part10
 
 permissions:
   contents: write
@@ -15,12 +15,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Reconstruct source archive
         run: |
-          base64 -d source.b64 > /tmp/Terrain2Flow.zip
+          cat source.part* | base64 -d > /tmp/Terrain2Flow.zip
           rm -rf /tmp/src
           mkdir -p /tmp/src
           unzip -q /tmp/Terrain2Flow.zip -d /tmp/src
           cp -a /tmp/src/Terrain2Flow/. .
-          rm -f source.b64
+          rm -f source.b64 source.part*
       - name: Commit source files
         run: |
           git config user.name "github-actions[bot]"
